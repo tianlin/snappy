@@ -5,7 +5,7 @@
 
     <groupId>org.iq80.snappy</groupId>
     <artifactId>snappy</artifactId>
-    <version>0.5-SNAPSHOT</version>
+    <version>0.5-jdk1.5</version>
     <packaging>jar</packaging>
 
     <name>snappy</name>
@@ -212,8 +212,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>2.3.2</version>
                     <configuration>
-                        <source>1.6</source>
-                        <target>1.6</target>
+                        <source>1.5</source>
+                        <target>1.5</target>
                     </configuration>
                 </plugin>
 
@@ -309,9 +309,9 @@
                     </configuration>
                 </plugin>
 
-                <!-- 
-                  Do a license check by running       : mvn license:check  
-                  Update the license check by running : mvn license:format  
+                <!--
+                  Do a license check by running       : mvn license:check
+                  Update the license check by running : mvn license:format
                 -->
                 <plugin>
                     <groupId>com.mycila.maven-license-plugin</groupId>

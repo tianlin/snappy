@@ -35,6 +35,13 @@ public final class Snappy
     {
     }
 
+    private static byte[] copyOf(byte[] original, int newLength) {
+        byte[] copy = new byte[newLength];
+        System.arraycopy(original, 0, copy, 0,
+                         Math.min(original.length, newLength));
+        return copy;
+    }
+
     /**
      * Uses the stream marker bytes to determine if the {@link SnappyFramedInputStream} or
      * {@link SnappyInputStream} should be used to decompress the content of <i>source</i>.
@@ -64,11 +71,11 @@ public final class Snappy
         }
 
         if (buffer[0] == HEADER_BYTES[0]) {
-            checkArgument(Arrays.equals(Arrays.copyOf(buffer, HEADER_BYTES.length), HEADER_BYTES), "invalid header");
+            checkArgument(Arrays.equals(copyOf(buffer, HEADER_BYTES.length), HEADER_BYTES), "invalid header");
             return new SnappyFramedInputStream(source, verifyChecksums);
         }
         else {
-            checkArgument(Arrays.equals(Arrays.copyOf(buffer, STREAM_HEADER.length), STREAM_HEADER), "invalid header");
+            checkArgument(Arrays.equals(copyOf(buffer, STREAM_HEADER.length), STREAM_HEADER), "invalid header");
             return new SnappyInputStream(source, verifyChecksums);
         }
     }
@@ -115,7 +122,8 @@ public final class Snappy
     {
         byte[] compressedOut = new byte[maxCompressedLength(data.length)];
         int compressedSize = compress(data, 0, data.length, compressedOut, 0);
-        byte[] trimmedBuffer = Arrays.copyOf(compressedOut, compressedSize);
+
+        byte[] trimmedBuffer = copyOf(compressedOut, compressedSize);
         return trimmedBuffer;
     }
 
